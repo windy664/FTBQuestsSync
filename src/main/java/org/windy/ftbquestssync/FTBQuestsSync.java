@@ -26,11 +26,14 @@ public final class FTBQuestsSync extends JavaPlugin implements Listener {
         // Plugin startup logic
         this.saveDefaultConfig();
         Bukkit.getPluginManager().registerEvents(this, this);
+        this.getServer().getConsoleSender().sendMessage(Texts.bless);
+        this.getServer().getConsoleSender().sendMessage(Texts.logo);
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        this.getServer().getConsoleSender().sendMessage(Texts.bless);
+        this.getServer().getConsoleSender().sendMessage(Texts.logo);
     }
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {

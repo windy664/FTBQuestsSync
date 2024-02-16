@@ -1,0 +1,4 @@
+name: FTBQuestsSync
+version: '${version}'
+main: org.windy.ftbquestssync.FTBQuestsSync
+api-version: '1.20'

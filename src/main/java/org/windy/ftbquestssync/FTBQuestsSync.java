@@ -91,7 +91,7 @@ public final class FTBQuestsSync extends JavaPlugin implements Listener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        long endTime = System.currentTimeMillis(); // 记录结束时间
+        long endTime = System.currentTimeMillis(); // 记录结束时间t
         long duration = endTime - startTime; // 计算耗时
         if (debugMode){
             this.getLogger().info("执行完毕！耗时："+ duration + " ms");

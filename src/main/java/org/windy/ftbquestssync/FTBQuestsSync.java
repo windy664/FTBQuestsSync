@@ -1,7 +1,6 @@
 package org.windy.ftbquestssync;
 
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -51,14 +50,12 @@ public final class FTBQuestsSync extends JavaPlugin implements Listener {
 
         Player player = event.getPlayer();
         String playerName = player.getName(); //获取玩家的名字
-        boolean status = true;
-        if(status){
             UUID uuid = player.getUniqueId();
             if (debugMode){
                 this.getLogger().info("开始获取玩家" + playerName +"("+uuid+")的基本信息");
             }
-            sync(String.valueOf(uuid),String.valueOf(playerName));
-        }
+            sync(String.valueOf(uuid), playerName);
+
     }
     public void sync(String uuid,String player) {
         long startTime = System.currentTimeMillis(); // 记录开始时间
@@ -72,7 +69,6 @@ public final class FTBQuestsSync extends JavaPlugin implements Listener {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             boolean inCompletedSection = false;
-            boolean inChangeProgressSection = false;
             if (debugMode){
                 this.getLogger().info("开始搜索"+player+"的FTB任务进度");
             }
@@ -80,7 +76,6 @@ public final class FTBQuestsSync extends JavaPlugin implements Listener {
                 if (line.contains("completed: {")) {
                     inCompletedSection = true;
                 } else if (inCompletedSection && line.contains("}")) {
-                    inCompletedSection = false;
                     break; // 结束读取
                 }
                 if (debugMode){

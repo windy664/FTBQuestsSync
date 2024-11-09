@@ -15,7 +15,10 @@ import java.io.IOException;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Filter;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 public final class FTBQuestsSync extends JavaPlugin implements Listener {
     String value = this.getConfig().getString("Debug");
     boolean debugMode = Boolean.parseBoolean(value);
@@ -28,6 +31,14 @@ public final class FTBQuestsSync extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(this, this);
         this.getServer().getConsoleSender().sendMessage(Texts.bless);
         this.getServer().getConsoleSender().sendMessage(Texts.logo);
+
+        //日志屏蔽
+        Logger logger = getServer().getLogger();
+
+        // 设置日志过滤器
+        ConsoleHandler consoleHandler = new ConsoleHandler();
+        consoleHandler.setFilter(new LogFilter());  // 为控制台日志添加过滤器
+        logger.addHandler(consoleHandler);
     }
 
     @Override
@@ -91,10 +102,21 @@ public final class FTBQuestsSync extends JavaPlugin implements Listener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        long endTime = System.currentTimeMillis(); // 记录结束时间t
+        long endTime = System.currentTimeMillis(); // 记录结束时间
         long duration = endTime - startTime; // 计算耗时
         if (debugMode){
             this.getLogger().info("执行完毕！耗时："+ duration + " ms");
+        }
+    }
+    class LogFilter implements Filter {
+        @Override
+        public boolean isLoggable(LogRecord record) {
+            // 过滤掉包含 "Progress has been changed!" 或 "No quest object found" 的日志
+            if (record.getMessage().contains("Progress has been changed!") ||
+                    record.getMessage().contains("No quest object found")) {
+                return false; // 不记录这些日志
+            }
+            return true; // 其他日志正常记录
         }
     }
 }

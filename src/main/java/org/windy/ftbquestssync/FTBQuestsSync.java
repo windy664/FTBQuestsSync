@@ -111,7 +111,7 @@ public final class FTBQuestsSync extends JavaPlugin implements Listener {
     class LogFilter implements Filter {
         @Override
         public boolean isLoggable(LogRecord record) {
-            // 过滤掉包含 "Progress has been changed!"、"No quest object found" 或 "complete ed<--[HERE]" 的日志
+            // 过掉包含 "Progress has been changed!"、"No quest object found" 或 "complete ed<--[HERE]" 的日志
             if (record.getMessage().contains("Progress has been changed!") ||
                     record.getMessage().contains("No quest object found") ||
                     record.getMessage().contains("complete ed<--[HERE]")) {
